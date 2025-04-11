@@ -6,10 +6,9 @@ import com.thalesmonteiro.backendfirebase.entity.DeviceToken;
 import com.thalesmonteiro.backendfirebase.repository.DeviceTokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/token")
@@ -30,6 +29,11 @@ public class DeviceTokenController {
 
         repository.save(new DeviceToken(request.getToken(), request.getNomeaparelho()));
         return ResponseEntity.ok("Token salvo com sucesso");
+    }
+
+    @GetMapping
+    public List<DeviceToken> listarTokens() {
+        return repository.findAll();
     }
 }
 
