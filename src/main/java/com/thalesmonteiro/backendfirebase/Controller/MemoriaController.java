@@ -16,7 +16,7 @@ public class MemoriaController {
 
     @GetMapping
     public List<Memoria> listar() {
-        return memoriaRepository.findAll();
+        return memoriaRepository.findAll(Sort.by("id"));
     }
 
     @PostMapping
