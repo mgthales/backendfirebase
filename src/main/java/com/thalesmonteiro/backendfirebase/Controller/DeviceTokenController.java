@@ -21,10 +21,14 @@ public class DeviceTokenController {
         this.repository = repository;
     }
 
-    @PostMapping
+   @PostMapping
     public ResponseEntity<?> salvarToken(@RequestBody DeviceToken request) {
-        if (repository.existsByToken(request.getToken())) {
-            return ResponseEntity.ok("Token já cadastrado");
+        Optional<DeviceToken> existe = repository.findByNomeaparelho(request.getNomeaparelho());
+        if (existe.isPresent()){
+            DeviceToken deviceToken = existe.get();
+            deviceToken.setToken(request.getToken());
+            repository.save(deviceToken);
+            return ResponseEntity.ok("Token atualizado com sucesso");
         }
 
         repository.save(new DeviceToken(request.getToken(), request.getNomeaparelho()));
@@ -36,4 +40,5 @@ public class DeviceTokenController {
         return repository.findAll();
     }
 }
+
 
