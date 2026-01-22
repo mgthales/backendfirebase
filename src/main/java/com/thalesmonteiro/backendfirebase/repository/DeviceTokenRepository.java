@@ -10,6 +10,11 @@ import java.util.Optional;
 @Repository
 public interface DeviceTokenRepository extends JpaRepository<DeviceToken, Long> {
     boolean existsByToken(String token);
-    Optional<DeviceToken> findByNomeaparelho(String nomeaparelho);
+        @Query(
+            value = "SELECT * FROM devicetoken WHERE nomeaparelho = :nomeaparelho",
+            nativeQuery = true
+    )
+    Optional<DeviceToken> findByNomeaparelho(@Param("nomeaparelho") String nomeaparelho);
+
 
 }
